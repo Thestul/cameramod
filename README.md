@@ -1,47 +1,62 @@
-
 <h1 align="center">
   <sub>
-    <img src="src/main/resources/assets/cameramod/textures/item/camera_item.png" width="150">
+    <img src="src/main/resources/assets/cameramod/textures/item/camera_item.png" width="150" alt="CameraMod icon">
   </sub>
   <br>
   Minecraft Virtualcam
 </h1>
 
-This is a minecraft mod for *1.21.8 Fabric*, which registers a *virtual camera* into the Windows system using [softcam](https://github.com/tshino/softcam) and streams a camera entity's rendered POV into it.
-
 <p align="center">
-  <a href="https://github.com/tggamesyt/cameramod/releases">
-    <img src="https://img.shields.io/github/v/release/tggamesyt/cameramod?style=for-the-badge" alt="Release">
-  </a>
-  <a href="https://github.com/tggamesyt/cameramod/releases">
-    <img src="https://img.shields.io/github/downloads/tggamesyt/cameramod/total?style=for-the-badge" alt="Downloads">
-  </a>
+  A Fabric 26.1.2 port of <a href="https://github.com/TGGamesYT/cameramod">Minecraft Virtualcam by TGGamesYT</a>.
 </p>
 
-<sub>Inspired by [Flashz's omegle mod](https://youtube.com/@flashzyt)</sub>
-## Notice
-paid [ko-fi](https://ko-fi.com/tgdoescode) supporters always get updates before they go public, and they also get an exclusive screen mod to go along with the cameramod.
+This mod lets you place a camera in Minecraft and stream its view to other applications. On Linux, use the local MJPEG stream with OBS. On Windows, the original [SoftCam](https://github.com/tshino/softcam) virtual-camera support is retained.
+
+> **Experimental port:** Tested in-game on Linux. The Windows virtual-camera driver has not yet been tested with this port.
+
+## Requirements
+
+- Minecraft **26.1.2**
+- Fabric Loader and Fabric API for 26.1.2
+- Java 25
+
 ## Setup
-[tutorial video](https://www.youtube.com/watch?v=FlCc2BnZQFE)
-othervise:
-- Download the latest version of the mod from [here](https://github.com/tggamesyt/cameramod/releases/latest) or from [modrinth](https://modrinth.com/mod/virtualcamera)
-- Open the game with the mod, 1.21.8 fabric.
-- Follow the powershell popups' instructions
-- When prompted, allow ```Microsoft® Register Server``` to run, this registers the virtual webcam.
-- Restart your computer
 
-## Usage
-Once you have the *virtual camera* registered, you can just go into a world, place a camera down, and activate it using the camera activator.
-I also added some utility items for rotating and moving the camera around.
+1. Put the mod JAR and Fabric API in your Minecraft profile’s `mods` folder.
+2. Start the game, enter a world, place a camera, and activate it with the camera activator.
 
-(once in game, go to https://tggamesyt.dev/webcam to quick test it)
+### Linux: OBS
 
-<img src="src/main/resources/assets/cameramod/camera_image.png" width="800">
+Add a **Browser Source** in OBS with this URL:
 
-## Uninstalling
+```text
+http://127.0.0.1:7236/
+```
 
-if you no longer want to use this mod and want to unregister the webcam, run ```%appdata%/.minecraft_cameramod/uninstall_camera.bat```
+The direct MJPEG stream is available at `http://127.0.0.1:7236/stream`. You can then start OBS Virtual Camera if you want to use the output in another application.
 
-## Development notice
-when cloning the repo, if you wish to rebuild the natives (dll-s) from softcam, use ```--recurse-submodules```.
-to rebuild the ```src/main/resources/natives```, run ```.\build_softcam.bat``` with **VS 2022** and **Windows SDK** installed.
+### Windows
+
+The port includes the original SoftCam files. Windows virtual-camera registration and output still need testing. The OBS browser-source method above is also available.
+
+## Camera FPS
+
+The stream defaults to 30 FPS. To change its limit in-game, use:
+
+```text
+/cm streamfps 60
+```
+
+The limit can be set from 1 to 240 FPS; actual performance depends on Minecraft and your computer.
+
+## Credits
+
+- **Original mod:** [TGGamesYT/cameramod](https://github.com/TGGamesYT/cameramod) by TGGamesYT
+- **Windows virtual-camera library:** [softcam](https://github.com/tshino/softcam)
+- The original project was inspired by [Flashz](https://youtube.com/@flashzyt).
+
+This repository is an unofficial port of TGGamesYT’s mod, not a replacement for the original project. The original GPL-2.0 license is retained.
+
+## Building
+
+Run `./gradlew build` with Java 25. The JAR will be in `build/libs/`.
